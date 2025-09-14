@@ -189,7 +189,7 @@ class Cerb(BaseClass):
                         'class': 'cerb-search-trigger',
                         'data-context': 'cerberusweb.contexts.message',
                     },
-                ).div.text  # fmt: skip
+                ).div.text
             )
             com_count = int(
                 ticket_soup.find(
@@ -244,14 +244,19 @@ class Cerb(BaseClass):
             ticket_headers = self._req_get(
                 f'{self.SYSTEM_URL}/ajax.php?c=profiles&a=handleSectionAction&section=ticket&action=showMessageFullHeadersPopup&id={ticket_msg_id}'
             )
-            ticket_headers = BeautifulSoup(ticket_headers, 'html.parser').textarea.text
+            _ticket_headers = BeautifulSoup(ticket_headers, 'html.parser').textarea.text
+            _ticket_headers = _ticket_headers.split('\n')
+            if _ticket_headers[0] == '':
+                ticket_headers = '\n'.join(_ticket_headers[1:])
+            else:
+                ticket_headers = '\n'.join(_ticket_headers)
             log.debug(
                 f'[spamscore][{ticket_mask}] found ticket_headers: len({len(ticket_headers)})'
             )
 
             # get body
             ticket_body_url = re.findall(
-                r'(/index.php/files/\d+/original1_message.html)', ticket_msg_html
+                r'(/index.php/files/\d+/original_message.html)', ticket_msg_html
             )
             # from original_message.html
             if len(ticket_body_url) > 0:
