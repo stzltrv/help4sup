@@ -51,6 +51,7 @@ class Guru(BaseClass):
                 if ticket.updated_at == ticket_updated_at:
                     log.debug('nothing new, skip')
                 else:
+                    # TODO: filter lastActivity
                     if (ticket_updated_at - ticket.updated_at).total_seconds() < 61:
                         log.debug('dont double notify < 1min, update time and skip')
                         ticket.updated_at = ticket_updated_at
