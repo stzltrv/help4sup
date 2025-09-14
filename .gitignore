@@ -1,0 +1,20 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.ruff_cache
+
+# Config
+.env
+
+# Virtual environments
+.venv
+
+# other
+Majordomo_LLC_Root_CA.crt
+ticket_spamscore_list.sql
+app.log
+TODO.txt
