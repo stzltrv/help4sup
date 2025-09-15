@@ -177,8 +177,9 @@ class Cerb(BaseClass):
                 == -1
             ):
                 log.debug(f'[spamscore][{ticket_mask}] found buttons')
+                score += -99
                 # force return
-                return -99
+                return score
 
             # Check msg/comm count
             ticket_soup = BeautifulSoup(ticket_html, 'html.parser')
@@ -205,8 +206,9 @@ class Cerb(BaseClass):
             )
             if msg_count > 1 or com_count > 1:
                 log.debug(f'[spamscore][{ticket_mask}] found conversation')
+                score += -50
                 # force return
-                return -50
+                return score
 
             # get ticket id
             ticket_id = re.findall(r'ticket_id=(\d+)', ticket_html)[0]
@@ -366,6 +368,9 @@ class Cerb(BaseClass):
                             f'[spamscore][{ticket_mask}] found ticket in spamscore_list, score:{data.score} comment:{data.comment}'
                         )
                         score += data.score
+
+                        # dont need another check
+                        break
 
             # Cerb score
             cerb_spam_score = re.findall(
