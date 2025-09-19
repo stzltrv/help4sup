@@ -235,12 +235,17 @@ class Cerb(BaseClass):
             log.debug(f'[spamscore][{ticket_mask}] found ticket_email: {ticket_email}')
 
             # get subject
-            ticket_subject = re.findall(r'<b>Subject:</b>\s(.*)<br>', ticket_msg_html)[
-                0
-            ]
-            log.debug(
-                f'[spamscore][{ticket_mask}] found ticket_subject: "{ticket_subject}"'
-            )
+            ticket_subject = re.findall(r'<b>Subject:</b>\s(.*)<br>', ticket_msg_html)
+            if len(ticket_subject) > 0:
+                ticket_subject = ticket_subject[0]
+                log.debug(
+                    f'[spamscore][{ticket_mask}] found ticket_subject: "{ticket_subject}"'
+                )
+            else:
+                ticket_subject = '(no subject)'
+                log.debug(
+                    f'[spamscore][{ticket_mask}] not found ticket_subject'
+                )
 
             # get headers
             ticket_headers = self._req_get(
