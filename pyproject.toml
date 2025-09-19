@@ -1,7 +1,7 @@
 [project]
-name = "ticket_alert"
+name = "ticketsync"
 version = "1.0"
-description = "Some utils for help tech support"
+description = "Ticket graber"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

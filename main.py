@@ -57,8 +57,7 @@ def main():
 
     # notification handler
     notification = Telegram(
-        token=os.getenv('TELEGRAM_TOKEN'),
-        chat_id=os.getenv('TELEGRAM_CHAT_ID')
+        token=os.getenv('TELEGRAM_TOKEN'), chat_id=os.getenv('TELEGRAM_CHAT_ID')
     )
 
     # Main loop

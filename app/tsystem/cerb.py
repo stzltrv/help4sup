@@ -243,9 +243,7 @@ class Cerb(BaseClass):
                 )
             else:
                 ticket_subject = '(no subject)'
-                log.debug(
-                    f'[spamscore][{ticket_mask}] not found ticket_subject'
-                )
+                log.debug(f'[spamscore][{ticket_mask}] not found ticket_subject')
 
             # get headers
             ticket_headers = self._req_get(
