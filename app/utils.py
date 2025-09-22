@@ -6,8 +6,8 @@ def am_i_working_now(cycle_start: datetime) -> bool:
 
     days_in_cycle = (now - cycle_start).days % 8
 
-    # 0, 1, 2, 3 - work days
-    if days_in_cycle < 4:
+    # 0, 1, 2, 3(4 night) - work days
+    if days_in_cycle <= 4:
         # day shift
         if days_in_cycle < 2:
             # weekend
@@ -25,6 +25,10 @@ def am_i_working_now(cycle_start: datetime) -> bool:
 
         else:
             # night shift
+            # last day fix
+            if days_in_cycle == 4 and now.hour >= 10:
+                return False
+
             start_time = now.replace(hour=21, minute=45)
             end_time = (now + timedelta(days=1)).replace(hour=10, minute=0)
 
