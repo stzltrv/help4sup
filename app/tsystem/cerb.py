@@ -119,7 +119,11 @@ class Cerb(BaseClass):
                     # get spamscore ticket
                     if os.getenv('ENABLE_SPAM_SCORE') == '1':
                         log.debug('get spamscore')
-                        spamscore_list = db_session.query(SpamscoreListModel).all()
+                        spamscore_list = (
+                            db_session.query(SpamscoreListModel)
+                            .order_by(SpamscoreListModel.subject.desc())
+                            .all()
+                        )
                         ticket_spamscore = self.spamscore_ticket(
                             ticket_mask, spamscore_list
                         )
@@ -228,7 +232,9 @@ class Cerb(BaseClass):
             ticket_msg_soap = BeautifulSoup(ticket_msg_html, 'html.parser')
 
             # get ticket from email
-            ticket_email = re.findall(r'<b>From:</b>.*&lt;(.*)&gt;<br>', ticket_msg_html)[0]
+            ticket_email = re.findall(
+                r'<b>From:</b>.*&lt;(.*)&gt;<br>', ticket_msg_html
+            )[0]
             log.debug(f'[spamscore][{ticket_mask}] found ticket_email: {ticket_email}')
 
             # get subject
