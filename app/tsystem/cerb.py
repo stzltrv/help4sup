@@ -121,7 +121,7 @@ class Cerb(BaseClass):
                         log.debug('get spamscore')
                         spamscore_list = (
                             db_session.query(SpamscoreListModel)
-                            .order_by(SpamscoreListModel.subject.desc())
+                            .order_by(SpamscoreListModel.score.desc())
                             .all()
                         )
                         ticket_spamscore = self.spamscore_ticket(
