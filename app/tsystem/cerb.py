@@ -228,10 +228,8 @@ class Cerb(BaseClass):
             ticket_msg_soap = BeautifulSoup(ticket_msg_html, 'html.parser')
 
             # get ticket from email
-            ticket_email = ticket_msg_soap.find(
-                'a', {'data-context': 'cerberusweb.contexts.address'}
-            ).text
-            ticket_email = ticket_email.replace('<', '').replace('>', '')
+            # <b>From:</b> Temu Coupon &lt;Coupon-xmv@bestpromots.click&gt;<br>
+            ticket_email = re.findall(r'<b>From:</b>.*<(.*)><br>', ticket_msg_html)[0]
             log.debug(f'[spamscore][{ticket_mask}] found ticket_email: {ticket_email}')
 
             # get subject
