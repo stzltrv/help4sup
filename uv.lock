@@ -194,7 +194,7 @@ wheels = [
 ]
 
 [[package]]
-name = "ticket-alert"
+name = "ticketsync"
 version = "1.0"
 source = { virtual = "." }
 dependencies = [
