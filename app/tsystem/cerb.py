@@ -228,7 +228,7 @@ class Cerb(BaseClass):
             ticket_msg_soap = BeautifulSoup(ticket_msg_html, 'html.parser')
 
             # get ticket from email
-            ticket_email = re.findall(r'<b>From:</b>.*<(.*)><br>', ticket_msg_html)[0]
+            ticket_email = re.findall(r'<b>From:</b>.*&lt;(.*)&gt;<br>', ticket_msg_html)[0]
             log.debug(f'[spamscore][{ticket_mask}] found ticket_email: {ticket_email}')
 
             # get subject
