@@ -400,6 +400,20 @@ class Cerb(BaseClass):
 
             # rspamd score
             if os.getenv('ENABLE_RSPAMD') == '1':
+                # Remove local smtp_relay header for better check (spf)
+                relays = re.findall(
+                    r'^Received:.*?\n(?=\n|\S+?:)',
+                    ticket_headers,
+                    flags=re.MULTILINE | re.DOTALL,
+                )
+                for relay in relays:
+                    for cerb_relay in os.getenv('CERB_SMTP_RELAY').split(','):
+                        if relay.split('\n')[0].find(cerb_relay) >= 0:
+                            ticket_headers = ticket_headers.replace(relay, '')
+                            log.debug(
+                                f'[spamscore][{ticket_mask}] remove smtp_relay from headers {cerb_relay}'
+                            )
+
                 ticket_eml = f'{ticket_headers}{ticket_body}'
 
                 try:

@@ -66,7 +66,7 @@ def main():
         load_dotenv(override=True)
 
         # update autoclose var on work/non work days
-        if os.getenv('CHECK_WORK_DAYS') == '1':
+        if os.getenv('ENABLE_AUTOCLOSE') == 'auto':
             if am_i_working_now(cycle_start=datetime(2025, 9, 11)) is False:
                 os.environ['ENABLE_AUTOCLOSE'] = '0'
             else:
