@@ -36,9 +36,7 @@ class Guru(BaseClass):
             ticket_mask = ticket_data['ticket']['mask']
             ticket_subject = ticket_data['ticket']['subject']
             ticket_user = ticket_data['ticket']['username']
-            ticket_group = 'Hms'
-            if ticket_data['ticket']['panelPrefix'] == 'md':
-                ticket_group = 'Vps'
+            ticket_group = ticket_data['ticket']['panelPrefix']
             ticket_url = f'{self.SYSTEM_URL}/#/support/chat/{ticket_data["ticket"]["panelPrefix"]}/{ticket_id}'
             ticket_updated_at = datetime.datetime.strptime(
                 ticket_data['ticket']['lastActivity'], '%Y-%m-%d %H:%M:%S'
