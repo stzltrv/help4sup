@@ -13,6 +13,8 @@ class Ticket(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     system_name: Mapped[str] = mapped_column(String(16), nullable=False)
+    # TODO
+    # string > 16: HG-65931-157-MERGED
     mask: Mapped[str] = mapped_column(
         String(16), unique=True, index=True, nullable=False
     )

@@ -41,8 +41,7 @@ def main():
     # init ticket systems
     ticket_systems = [
         Cerb(
-            token=os.getenv('CERBERUS_TOKEN'),
-            cert_path=f'{os.path.dirname(os.path.realpath(__file__))}/Majordomo_LLC_Root_CA.crt',
+            token=os.getenv('MJ_CERBERUS_TOKEN'),
             buckets=[
                 600,  # Service
                 601,  # Support
@@ -51,7 +50,20 @@ def main():
             ],
         ),
         Guru(
-            token=os.getenv('GURU_TOKEN'),
+            token=os.getenv('MJ_GURU_TOKEN'),
+            query_data={
+                'query': 'статус:1,4 отдел:2,6 панель:mjd,md ',
+                'counters': {'4': 'отдел:2,6 статус:4'},
+                'sort': {'field': 'byactivity', 'order': -1},
+            },
+        ),
+        Guru(
+            token=os.getenv('MC_GURU_TOKEN'),
+            query_data={
+                'query': 'статус:1,4 отдел:2,6 панель:mch,mc,myrw ',
+                'counters': {'4': 'отдел:2,6 статус:4'},
+                'sort': {'field': 'byactivity', 'order': -1},
+            },
         ),
     ]
 

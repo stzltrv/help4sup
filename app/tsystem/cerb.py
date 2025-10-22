@@ -17,13 +17,12 @@ log = logging.getLogger('tsystem.cerb')
 
 class Cerb(BaseClass):
     SYSTEM_NAME = 'Cerberus'
-    SYSTEM_URL = 'https://cerberus.intr'
+    SYSTEM_URL = 'https://cerberus.majordomo.ru'
     CERT_PATH = str
     BUCKETS = list[int]
 
-    def __init__(self, token: str, cert_path: str, buckets: list[int]):
+    def __init__(self, token: str, buckets: list[int]):
         self.AUTH_TOKEN = token
-        self.CERT_PATH = cert_path
         self.BUCKETS = buckets
 
     #
@@ -62,7 +61,7 @@ class Cerb(BaseClass):
 
                 # get mask
                 ticket_mask = re.match(
-                    'https://cerberus.intr/index.php/profiles/ticket/(.*)/conversation',
+                    'https://cerberus.majordomo.ru/index.php/profiles/ticket/(.*)/conversation',
                     ticket_url,
                 ).group(1)
                 log.debug(f'found ticket_mask {ticket_mask}')
@@ -461,7 +460,6 @@ class Cerb(BaseClass):
                 'cookie': f'Devblocks={self.AUTH_TOKEN}',
                 'user-agent': self.USER_AGENT,
             },
-            verify=self.CERT_PATH,
         )
 
         if resp.status_code != 200:
@@ -481,7 +479,6 @@ class Cerb(BaseClass):
                 'cookie': f'Devblocks={self.AUTH_TOKEN}',
                 'user-agent': self.USER_AGENT,
             },
-            verify=self.CERT_PATH,
         )
 
         if resp.status_code != 200:

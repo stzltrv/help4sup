@@ -1,5 +1,6 @@
 import datetime
 import logging
+import json
 
 import requests
 
@@ -13,9 +14,11 @@ log = logging.getLogger('tsystem.guru')
 class Guru(BaseClass):
     SYSTEM_NAME = 'Guru'
     SYSTEM_URL = 'https://ihc.guru'
+    QUERY_DATA = dict
 
-    def __init__(self, token: str):
+    def __init__(self, token: str, query_data: dict):
         self.AUTH_TOKEN = token
+        self.QUERY_DATA = query_data
 
     #
     # Parse tickets
@@ -25,7 +28,7 @@ class Guru(BaseClass):
 
         data = self._req_post(
             url=f'{self.SYSTEM_URL}/ticket/search',
-            data='{"query":"статус:1,4 отдел:2,6 ","counters":{"4":"отдел:2,6 статус:4"},"sort":{"field":"byactivity","order":-1}}',
+            data=json.dumps(self.QUERY_DATA),
         )
 
         if 'list' not in data:
